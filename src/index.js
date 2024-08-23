@@ -1,18 +1,13 @@
 const express = require('express');
-const dotenv = require('dotenv');
-
-dotenv.config();
+const { PORT } = require('./config/server.config');
+const homePingControler = require('./controllers/home.controller');
+const  router  = require('./routes');
+const customRoutes = require('./routes/custom');
 
 const app = express();
 
-const PORT = process.env.PORT;
-
-app.get('/home', (req, res) => {
-
-    console.log('home called');
-
-    return res.json({msg : 'Ok'});
-})
+app.use(router);
+app.use('/custom', customRoutes);
 
 app.listen(PORT, () => {
     console.log(`started server at port ${PORT}`);
